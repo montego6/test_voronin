@@ -41,6 +41,8 @@ jobs:
           DB_PASSWORD: testrootpass          
           DB_HOST: 127.0.0.1
           CELERY_HOST_NAME: 127.0.0.1
+          EMAIL: test@test.com
+          EMAIL_PASSWORD: testpassword
       run: |
         python manage.py migrate
         pytest
