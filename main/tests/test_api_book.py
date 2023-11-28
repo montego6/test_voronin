@@ -95,3 +95,16 @@ def test_delete_book(client, book):
    
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert Book.objects.last() is None
+
+
+@pytest.mark.django_db
+def test_count_book(client):
+     books = BookFactory.create_batch(9)
+     response = client.get(reverse('book-count'))
+
+     expected_data = {
+         'count': 9
+     }
+
+     assert response.status_code == status.HTTP_200_OK
+     assert response.data == expected_data
