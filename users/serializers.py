@@ -1,7 +1,4 @@
-
-
 from rest_framework import serializers
-
 from users.models import CustomUser
 from users.tasks import send_welcome_letter
 
@@ -17,5 +14,5 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data)
         username = user.username
         email = user.email
-        send_welcome_letter.s(email, username).apply_async()
+        send_welcome_letter.delay(email, username)
         return user
