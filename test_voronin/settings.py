@@ -133,3 +133,15 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CELERY_BROKER_URL = f'redis://{config("CELERY_HOST_NAME")}:6379/0'
+CELERY_RESULT_BACKEND = f'redis://{config("CELERY_HOST_NAME")}:6379/0'
+
+DEFAULT_FROM_EMAIL = config('EMAIL')
+SERVER_EMAIL = config('EMAIL')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = config('EMAIL')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_PORT = 587
