@@ -1,0 +1,44 @@
+services:
+  app:
+    restart: always
+    build: .
+    ports:
+      - 8000:8000
+    command: sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=testdb
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+
+  redis:
+    image: redis:latest
+
+  celery:
+    restart: always
+    build: .
+    command: celery -A test_voronin.celery worker --loglevel=info
+    environment:
+      - DB_HOST=db
+      - DB_NAME=testdb
+      - DB_USER=root
+      - DB_PASS=root
+    depends_on:
+      - db
+      - redis
+      - app
+
+volumes:
+  db_data:
+
