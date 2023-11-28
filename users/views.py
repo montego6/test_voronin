@@ -10,3 +10,4 @@ class UserCreateAPIView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     
+    # there was bug, now it is fixed
