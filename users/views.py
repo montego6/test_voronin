@@ -5,7 +5,7 @@ from users.serializers import CustomUserSerializer
 
 # Create your views here.
 
+
 class UserCreateAPIView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    
